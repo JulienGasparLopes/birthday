@@ -36,14 +36,14 @@ export default function Home() {
     <>
       <div className="scroll-container">
         <RevealSection className="scroll-section flex flex-col justify-center items-center bg-[#1c1b19] text-[#cfc8c3] px-8">
-          <h1 className="animate-fade-bottom delay-300 text-6xl font-bold text-center mb-6">30s Birthday Cocktail</h1>
-          <p className="animate-fade-left delay-800 text-xl text-center max-w-2xl opacity-80">
+          <h1 className="animate-fade-bottom delay-300 text-8xl font-bold text-center mb-12">30s Birthday Cocktail</h1>
+          <p className="animate-fade-bottom delay-1200 text-xl text-center max-w-2xl opacity-80">
             La soirée la plus convoitée de l&apos;année par la Jetset, dans un near-rooftop en plein milieu des beaux
             quartiers de Saint-Maur
           </p>
         </RevealSection>
-        <RevealSection className="scroll-section flex flex-col justify-center items-start bg-[#d0c9c3] text-[#1d1b19] px-16">
-          <div className="flex flex-row gap-12">
+        <RevealSection className="scroll-section flex flex-col justify-center items-start bg-[#d0c9c3] text-[#1d1b19] px-32">
+          <div className="flex flex-row gap-12 w-full justify-between">
             <div className="animate-fade-top delay-300 max-w-xs">
               <h2 className="text-2xl font-bold mb-2">Le cadre</h2>
               <p className="opacity-70 leading-relaxed">
@@ -88,8 +88,18 @@ export default function Home() {
               onClick={() => setAddDrinkOpen(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#cfc8c3]/20 text-[#cfc8c3] opacity-50 hover:opacity-100 hover:border-[#cfc8c3]/60 transition-all text-sm"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
               Ajouter un drink
             </button>
@@ -103,7 +113,10 @@ export default function Home() {
         <AddDrinkModal
           existingDrinkIds={Object.keys(stocks)}
           onClose={() => setAddDrinkOpen(false)}
-          onContributed={() => { loadData(); setAddDrinkOpen(false); }}
+          onContributed={() => {
+            loadData();
+            setAddDrinkOpen(false);
+          }}
         />
       )}
     </>

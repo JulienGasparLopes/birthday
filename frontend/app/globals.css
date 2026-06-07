@@ -61,15 +61,15 @@ body {
 }
 
 .animate-fade-bottom {
-  animation: fade-from-bottom 0.9s ease-out both;
+  animation: fade-from-bottom 1.4s ease-out both;
 }
 
 .animate-fade-top {
-  animation: fade-from-top 0.9s ease-out both;
+  animation: fade-from-top 1.4s ease-out both;
 }
 
 .animate-fade-left {
-  animation: fade-from-left 0.9s ease-out both;
+  animation: fade-from-left 1.4s ease-out both;
 }
 
 .delay-300  { animation-delay: 0.3s; }
