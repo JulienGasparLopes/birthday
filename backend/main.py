@@ -6,6 +6,7 @@ from flask_cors import CORS
 from backend.connectors.mongo_connector import MongoConnector
 from backend.services.participations.participations_service import ParticipationsService
 from backend.services.participations.type_defs import ParticipationAmount
+from backend.services.votes.votes_service import VotesService
 
 app = Flask(__name__)
 CORS(app)
@@ -44,6 +45,7 @@ def add_participation() -> None:
         ),
         participation_type=request_data["participation_type"],
     )
+    return {}
 
 
 @app.route("/participations/stocks", methods=["GET"])
@@ -57,3 +59,27 @@ def get_user_participations(user_id: str):
     participations_service = ParticipationsService()
     participations = participations_service.get_user_participations(user_id)
     return [p.model_dump() for p in participations]
+
+
+@app.route("/votes/set", methods=["POST"])
+def set_vote():
+    data = request.get_json()
+    votes_service = VotesService()
+    vote = votes_service.set_vote(
+        user_id=data["user_id"],
+        event_part=data["event_part"],
+        choice=data["choice"],
+    )
+    return vote.model_dump()
+
+
+@app.route("/votes/user/<user_id>", methods=["GET"])
+def get_user_votes(user_id: str):
+    votes_service = VotesService()
+    return [v.model_dump() for v in votes_service.get_user_votes(user_id)]
+
+
+@app.route("/votes/counts", methods=["GET"])
+def get_vote_counts():
+    votes_service = VotesService()
+    return votes_service.get_vote_counts()

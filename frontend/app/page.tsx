@@ -1,43 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { AddDrinkModal } from "./components/AddDrinkModal";
 import { DrinkCard } from "./components/DrinkCard";
 import { DrinkModal } from "./components/DrinkModal";
+import { EventSchedule } from "./components/EventSchedule";
 import { RevealSection } from "./components/RevealSection";
 import { fetchStocks, fetchUserParticipations, Stock } from "./lib/api";
 
 const LS_KEY = "connected_user_id";
 
-type IconType = "spirits" | "whisky" | "champagne" | "wine" | "beer" | "can" | "carton" | "syrup";
-
-interface DrinkDef {
-  name: string;
-  drinkId: string;
-  needed: number;
-  icon: IconType;
-}
-
-// Static config: names, goals, icons
-const DRINKS: DrinkDef[] = [
-  { name: "Vodka", drinkId: "vodka", needed: 3, icon: "spirits" },
-  { name: "Gin", drinkId: "gin", needed: 3, icon: "spirits" },
-  { name: "Rhum", drinkId: "rhum", needed: 2, icon: "spirits" },
-  { name: "Tequila", drinkId: "tequila", needed: 2, icon: "spirits" },
-  { name: "Whisky", drinkId: "whisky", needed: 3, icon: "whisky" },
-  { name: "Champagne", drinkId: "champagne", needed: 4, icon: "champagne" },
-  { name: "Prosecco", drinkId: "prosecco", needed: 3, icon: "champagne" },
-  { name: "Vin rouge", drinkId: "vin_rouge", needed: 4, icon: "wine" },
-  { name: "Vin blanc", drinkId: "vin_blanc", needed: 3, icon: "wine" },
-  { name: "Bière", drinkId: "biere", needed: 5, icon: "beer" },
-  { name: "Mojito mix", drinkId: "mojito_mix", needed: 2, icon: "syrup" },
-  { name: "Jus orange", drinkId: "jus_orange", needed: 3, icon: "carton" },
-  { name: "Tonic", drinkId: "tonic", needed: 2, icon: "can" },
-  { name: "Sirop", drinkId: "sirop", needed: 1, icon: "syrup" },
-  { name: "Eau pétil.", drinkId: "eau_petil", needed: 4, icon: "can" },
-];
-
 export default function Home() {
-  const [modal, setModal] = useState<DrinkDef | null>(null);
+  const [modal, setModal] = useState<string | null>(null);
+  const [addDrinkOpen, setAddDrinkOpen] = useState(false);
   const [stocks, setStocks] = useState<Record<string, Stock>>({});
   const [userDrinkIds, setUserDrinkIds] = useState<Set<string>>(new Set());
 
@@ -92,8 +67,8 @@ export default function Home() {
             </div>
           </div>
         </RevealSection>
-        <section className="scroll-section flex flex-col justify-center items-center bg-[#1c1b19] text-[#cfc8c3] px-8 overflow-y-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 py-12 px-12 w-full max-w-5xl">
+        <section className="scroll-section relative flex flex-col items-center bg-[#1c1b19] text-[#cfc8c3] px-8 overflow-y-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 pt-12 px-12 pb-20 w-full max-w-5xl">
             {Object.entries(stocks).map(([drinkId, stock]) => (
               <DrinkCard
                 key={drinkId}
@@ -103,22 +78,32 @@ export default function Home() {
                 needed={stock.goal_amount.amount ?? 0}
                 icon={"spirits"}
                 highlighted={userDrinkIds.has(drinkId)}
-                onClick={() => setModal(stock)}
+                onClick={() => setModal(stock.participation_type)}
               />
             ))}
           </div>
+          {/* Add drink button — pinned to bottom */}
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+            <button
+              onClick={() => setAddDrinkOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#cfc8c3]/20 text-[#cfc8c3] opacity-50 hover:opacity-100 hover:border-[#cfc8c3]/60 transition-all text-sm"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Ajouter un drink
+            </button>
+          </div>
         </section>
-        <section className="scroll-section flex flex-col bg-[#d0c9c3] text-[#1d1b19]">
-          <h1>Coucou 4</h1>
-        </section>
+        <EventSchedule />
       </div>
 
-      {modal && (
-        <DrinkModal
-          drinkName={modal.name}
-          drinkId={modal.drinkId}
-          onClose={() => setModal(null)}
-          onContributed={loadData}
+      {modal && <DrinkModal drinkName={modal} onClose={() => setModal(null)} onContributed={loadData} />}
+      {addDrinkOpen && (
+        <AddDrinkModal
+          existingDrinkIds={Object.keys(stocks)}
+          onClose={() => setAddDrinkOpen(false)}
+          onContributed={() => { loadData(); setAddDrinkOpen(false); }}
         />
       )}
     </>

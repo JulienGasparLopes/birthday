@@ -42,6 +42,37 @@ export async function fetchUserParticipations(userId: string): Promise<Participa
   return res.json();
 }
 
+export type VoteChoice = "yes" | "maybe" | "no";
+export type EventPart = "apres-midi" | "soiree" | "nuit" | "brunch";
+
+export interface Vote {
+  user_id: string;
+  event_part: EventPart;
+  choice: VoteChoice;
+}
+
+export async function setVote(userId: string, eventPart: EventPart, choice: VoteChoice): Promise<Vote> {
+  const res = await fetch(`${API_BASE}/votes/set`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: userId, event_part: eventPart, choice }),
+  });
+  if (!res.ok) throw new Error("Failed to set vote");
+  return res.json();
+}
+
+export async function fetchUserVotes(userId: string): Promise<Vote[]> {
+  const res = await fetch(`${API_BASE}/votes/user/${userId}`);
+  if (!res.ok) throw new Error("Failed to fetch user votes");
+  return res.json();
+}
+
+export async function fetchVoteCounts(): Promise<Record<string, Record<VoteChoice, number>>> {
+  const res = await fetch(`${API_BASE}/votes/counts`);
+  if (!res.ok) throw new Error("Failed to fetch vote counts");
+  return res.json();
+}
+
 export async function addParticipation(
   userId: string,
   participationType: string,

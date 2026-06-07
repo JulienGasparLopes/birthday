@@ -136,6 +136,10 @@ export function DrinkCard({ name, available, needed, icon, highlighted, onClick 
   const fillTopRight = skew + contentW * percentage;
   const fillBottomRight = contentW * percentage;
 
+  const value = needed > 0 ? `${available}L/${needed}L` : `${available}L`;
+
+  const goalReached = available >= needed && needed > 0;
+
   return (
     <button
       onClick={onClick}
@@ -145,13 +149,11 @@ export function DrinkCard({ name, available, needed, icon, highlighted, onClick 
     >
       <div className="flex items-center gap-1.5 mb-2">
         <DrinkIcon type={icon} />
-        <span className="text-xs opacity-50 font-mono">
-          {available}/{needed}L
-        </span>
         <span className={`text-sm font-semibold tracking-wide truncate ${highlighted ? "text-[#cfc8c3]" : ""}`}>
           {name}
         </span>
-        {highlighted && <span className="ml-auto text-[10px] opacity-60">✓</span>}
+        <span className="text-xs opacity-50 font-mono">{value}</span>
+        {goalReached && <span className="ml-auto text-green-500 opacity-60">✓</span>}
       </div>
 
       <svg

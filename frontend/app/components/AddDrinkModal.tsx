@@ -1,42 +1,30 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { addParticipation, fetchUserParticipations } from "../lib/api";
+import { addParticipation } from "../lib/api";
 
-interface DrinkModalProps {
-  drinkName: string;
+interface AddDrinkModalProps {
+  existingDrinkIds: string[];
   onClose: () => void;
   onContributed: () => void;
 }
 
 const LS_KEY = "connected_user_id";
 
-export function DrinkModal({ drinkName, onClose, onContributed }: DrinkModalProps) {
+export function AddDrinkModal({ existingDrinkIds, onClose, onContributed }: AddDrinkModalProps) {
   const [userId, setUserId] = useState<string | null>(null);
+  const [drinkName, setDrinkName] = useState("");
   const [amount, setAmount] = useState("");
   const [unit, setUnit] = useState<"liquid" | "unit">("liquid");
-  const [currentStock, setCurrentStock] = useState<number | null>(null);
-  const [currentUnit, setCurrentUnit] = useState<"liquid" | "unit">("liquid");
   const [loading, setLoading] = useState(false);
-  const [removing, setRemoving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const userId = localStorage.getItem(LS_KEY);
-    if (!userId) return;
-    setUserId(userId);
-    fetchUserParticipations(userId)
-      .then((participations) => {
-        const existing = participations.find((p) => p.participation_type === drinkName);
-        setCurrentStock(existing?.participation_amount.amount ?? 0);
-        if (existing) setCurrentUnit(existing.participation_amount.unit);
-      })
-      .catch(() => setCurrentStock(null));
-  }, [drinkName]);
+    setUserId(localStorage.getItem(LS_KEY));
+  }, []);
 
-  // Close on Escape
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
@@ -45,30 +33,20 @@ export function DrinkModal({ drinkName, onClose, onContributed }: DrinkModalProp
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  async function handleRemove() {
-    if (!userId) return;
-    setRemoving(true);
-    setError(null);
-    try {
-      await addParticipation(userId, drinkName, 0, currentUnit);
-      setCurrentStock(0);
-      onContributed();
-    } catch {
-      setError("Erreur lors de la suppression. Réessaie.");
-    } finally {
-      setRemoving(false);
-    }
-  }
+  const drinkId = drinkName.trim().toLowerCase().replace(/\s+/g, "_");
+  const alreadyExists = existingDrinkIds.includes(drinkId);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const parsed = parseFloat(amount);
     if (!userId) return setError("Connecte-toi d'abord.");
+    if (!drinkName.trim()) return setError("Nom du drink requis.");
+    if (alreadyExists) return setError("Ce drink est déjà dans la liste.");
+    const parsed = parseFloat(amount);
     if (isNaN(parsed) || parsed <= 0) return setError("Quantité invalide.");
     setLoading(true);
     setError(null);
     try {
-      await addParticipation(userId, drinkName, parsed, unit);
+      await addParticipation(userId, drinkId, parsed, unit);
       setSuccess(true);
       onContributed();
     } catch {
@@ -87,14 +65,9 @@ export function DrinkModal({ drinkName, onClose, onContributed }: DrinkModalProp
       }}
     >
       <div className="bg-[#1c1b19] text-[#cfc8c3] rounded-2xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden">
-        {/* Header */}
         <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[#2e2c2a]">
-          <h2 className="text-lg font-semibold">{drinkName}</h2>
-          <button
-            onClick={onClose}
-            className="text-[#cfc8c3] opacity-50 hover:opacity-100 transition-opacity"
-            aria-label="Fermer"
-          >
+          <h2 className="text-lg font-semibold">Ajouter un drink</h2>
+          <button onClick={onClose} className="opacity-50 hover:opacity-100 transition-opacity" aria-label="Fermer">
             <svg
               width="18"
               height="18"
@@ -111,58 +84,40 @@ export function DrinkModal({ drinkName, onClose, onContributed }: DrinkModalProp
           </button>
         </div>
 
-        <div className="px-6 py-5 space-y-5">
-          {/* Current stock */}
-          {currentStock !== null && currentStock > 0 && (
-            <div className="flex items-center justify-between text-sm">
-              <p className="opacity-60">
-                Déjà engagé :{" "}
-                <span className="font-semibold opacity-100">
-                  {currentStock}
-                  {currentUnit === "liquid" ? "L" : " unité(s)"}
-                </span>
-              </p>
-              <button
-                type="button"
-                onClick={handleRemove}
-                disabled={removing}
-                className="flex items-center gap-1 text-xs text-red-400 hover:text-red-300 transition-colors disabled:opacity-50 ml-3"
-                aria-label="Supprimer ma participation"
-              >
-                {removing ? (
-                  "…"
-                ) : (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          )}
-
+        <div className="px-6 py-5">
           {!userId ? (
             <p className="text-sm opacity-60 py-2">
               Connecte-toi via l&apos;icône utilisateur pour pouvoir participer.
             </p>
           ) : success ? (
             <div className="text-center py-4">
-              <p className="text-lg font-semibold mb-1">Merci ! 🎉</p>
-              <p className="text-sm opacity-60">Ta participation a bien été enregistrée.</p>
+              <p className="text-lg font-semibold mb-1">Ajouté ! 🎉</p>
+              <p className="text-sm opacity-60">Le drink a bien été enregistré.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs opacity-50 uppercase tracking-widest mb-2">Quantité</label>
+                <label className="block text-xs opacity-50 uppercase tracking-widest mb-2">Nom du drink</label>
+                <input
+                  type="text"
+                  value={drinkName}
+                  onChange={(e) => {
+                    setDrinkName(e.target.value);
+                    setError(null);
+                  }}
+                  placeholder="ex: Aperol Spritz"
+                  className="w-full bg-[#2e2c2a] rounded-lg px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-[#cfc8c3]/40 placeholder:opacity-30"
+                  required
+                />
+                {alreadyExists && drinkName.trim() && (
+                  <p className="text-xs text-amber-400 mt-1">Ce drink est déjà dans la liste.</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs opacity-50 uppercase tracking-widest mb-2">
+                  Quantité que tu ramènes
+                </label>
                 <div className="flex gap-2">
                   <input
                     type="number"
@@ -189,7 +144,7 @@ export function DrinkModal({ drinkName, onClose, onContributed }: DrinkModalProp
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || alreadyExists}
                 className="w-full bg-[#cfc8c3] text-[#1c1b19] font-semibold rounded-lg py-2.5 text-sm transition-opacity disabled:opacity-50 hover:opacity-90"
               >
                 {loading ? "Envoi…" : "Je ramène ça 🍾"}
