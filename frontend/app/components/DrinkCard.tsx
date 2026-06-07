@@ -4,9 +4,12 @@ type IconType = "spirits" | "whisky" | "champagne" | "wine" | "beer" | "can" | "
 
 interface DrinkCardProps {
   name: string;
+  drinkId: string;
   available: number;
   needed: number;
   icon: IconType;
+  highlighted?: boolean;
+  onClick?: () => void;
 }
 
 const label = { fill: "#1c1b19", opacity: 0.35 };
@@ -122,7 +125,7 @@ function DrinkIcon({ type }: { type: IconType }) {
   );
 }
 
-export function DrinkCard({ name, available, needed, icon }: DrinkCardProps) {
+export function DrinkCard({ name, available, needed, icon, highlighted, onClick }: DrinkCardProps) {
   const percentage = Math.min(available / needed, 1);
 
   const skew = 12;
@@ -134,13 +137,21 @@ export function DrinkCard({ name, available, needed, icon }: DrinkCardProps) {
   const fillBottomRight = contentW * percentage;
 
   return (
-    <div className="flex flex-col">
+    <button
+      onClick={onClick}
+      className={`flex flex-col text-left cursor-pointer transition-opacity hover:opacity-70 rounded-sm outline-none
+        ${highlighted ? "ring-1 ring-[#cfc8c3]/40 p-1 -m-1" : ""}`}
+      aria-label={`Modifier ma participation pour ${name}`}
+    >
       <div className="flex items-center gap-1.5 mb-2">
         <DrinkIcon type={icon} />
         <span className="text-xs opacity-50 font-mono">
           {available}/{needed}L
         </span>
-        <span className="text-sm font-semibold tracking-wide truncate">{name}</span>
+        <span className={`text-sm font-semibold tracking-wide truncate ${highlighted ? "text-[#cfc8c3]" : ""}`}>
+          {name}
+        </span>
+        {highlighted && <span className="ml-auto text-[10px] opacity-60">✓</span>}
       </div>
 
       <svg
@@ -152,9 +163,12 @@ export function DrinkCard({ name, available, needed, icon }: DrinkCardProps) {
       >
         <polygon points={`${skew},0 ${totalW},0 ${contentW},${h} 0,${h}`} fill="#2e2c2a" />
         {percentage > 0 && (
-          <polygon points={`${skew},0 ${fillTopRight},0 ${fillBottomRight},${h} 0,${h}`} fill="#cfc8c3" />
+          <polygon
+            points={`${skew},0 ${fillTopRight},0 ${fillBottomRight},${h} 0,${h}`}
+            fill={highlighted ? "#e8e0d8" : "#cfc8c3"}
+          />
         )}
       </svg>
-    </div>
+    </button>
   );
 }
