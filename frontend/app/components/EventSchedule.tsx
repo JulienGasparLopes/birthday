@@ -9,30 +9,30 @@ const PARTS: { id: EventPart; title: string; time: string; description: string }
   {
     id: "apres-midi",
     title: "Après-midi",
-    time: "14h – 19h",
+    time: "14h – 20h",
     description:
-      "Détente et pré-chauffe sur la terrasse. Cocktails de bienvenue, musique douce, et premiers verres entre amis avant que la fête ne commence vraiment.",
+      "Jeux de société, ateliers cuisine et préparatifs divers, ice-breakers pour faire connaissance, combat de boue debout, lecture dans le petit salon. Venez passer un moment hors du temps entourés par les plus grands esprits de notre génération qui ont marqué l'histoire (ou pas).",
   },
   {
     id: "soiree",
     title: "Soirée",
-    time: "19h – 00h",
+    time: "20h – 2h",
     description:
-      "Le cœur de la fête. Cocktails signatures, dîner sur le rooftop, ambiance musicale montant en puissance. La Jetset réunie pour une nuit inoubliable.",
+      "Le cœur de la fête. Cocktails à la carte ou signatures réalisés sur mesure avec des ingrédients d'exception. Canapés et autres mets raffinés servis par un personnel aux petits soins. Musique soigneusement sélectionnée pour faire vibrer les murs du château et les âmes des convives.",
   },
   {
     id: "nuit",
     title: "Nuit",
-    time: "00h – 05h",
+    time: "2h – 11h",
     description:
-      "La nuit prend le relais. Dance floor, lumières tamisées, shots et confidences. Pour ceux qui ne comptent pas les heures.",
+      "After-party exclusive pour les plus téméraires: une nuit au château ! Le salon sera transformé pour l'occasion en suite royale avec canapé-lit, matelas au sol et, pour les plus nantis d'entre vous, sac de couchage. Histoires d'horreur au coin de la cheminée éteinte, soirée film ou simplement dormir entouré de vos compagnons de fête, à vous de choisir comment passer cette nuit magique.",
   },
   {
     id: "brunch",
     title: "Brunch",
-    time: "11h – 14h",
+    time: "11h – 15h",
     description:
-      "Le lendemain matin, retour en douceur. Brunch généreux, jus frais, café et souvenirs de la veille partagés entre survivants.",
+      "Le lendemain matin, retour en douceur. Brunch généreux, jus frais, café et souvenirs de la veille partagés entre les convives. L'occasion de bitcher sur les absents tout en savourant de délicieuses viennoiseries et autres mets raffinés. Un moment de détente pour clôturer ce week-end d'exception en beauté.",
   },
 ];
 
@@ -42,21 +42,21 @@ const VOTE_OPTIONS: { choice: VoteChoice; icon: string; label: string; color: st
     icon: "✓",
     label: "Je viens",
     color: "opacity-30 hover:opacity-70",
-    activeColor: "text-emerald-400 opacity-100",
+    activeColor: "text-green-700 opacity-100",
   },
   {
     choice: "maybe",
     icon: "?",
     label: "Peut-être",
     color: "opacity-30 hover:opacity-70",
-    activeColor: "text-amber-400 opacity-100",
+    activeColor: "text-yellow-600 opacity-100",
   },
   {
     choice: "no",
     icon: "✕",
     label: "Je ne viens pas",
     color: "opacity-30 hover:opacity-70",
-    activeColor: "text-red-400 opacity-100",
+    activeColor: "text-red-600 opacity-100",
   },
 ];
 
@@ -99,7 +99,7 @@ export function EventSchedule() {
   }
 
   return (
-    <section className="scroll-section flex flex-col bg-[#d0c9c3] text-[#1d1b19] px-8 py-12 overflow-y-auto">
+    <section className="scroll-section flex flex-col bg-[#d0c9c3] text-[#1d1b19] px-8 py-32 overflow-y-auto">
       <div className="flex flex-col sm:flex-row gap-6 flex-1 max-w-5xl w-full mx-auto">
         {PARTS.map((part) => {
           const partCounts = counts[part.id] ?? { yes: 0, maybe: 0, no: 0 };
@@ -110,8 +110,8 @@ export function EventSchedule() {
             <div key={part.id} className="flex flex-col flex-1 min-w-0">
               {/* Header */}
               <div className="mb-3">
-                <p className="text-xs opacity-50 tracking-widest uppercase mb-1">{part.time}</p>
                 <h2 className="text-xl font-bold">{part.title}</h2>
+                <p className="text-xs opacity-50 tracking-widest uppercase mb-1">{part.time}</p>
               </div>
 
               {/* Description */}

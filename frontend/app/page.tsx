@@ -44,25 +44,59 @@ export default function Home() {
         </RevealSection>
         <RevealSection className="scroll-section flex flex-col justify-center items-start bg-[#d0c9c3] text-[#1d1b19] px-32">
           <div className="flex flex-row gap-12 w-full justify-between">
-            <div className="animate-fade-top delay-300 max-w-xs">
+            <div className="animate-fade-top delay-300 max-w-xs flex flex-col gap-2">
               <h2 className="text-2xl font-bold mb-2">Le cadre</h2>
               <p className="opacity-70 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                Décoration minimaliste, épurée et recherchée dans un esprit loft-newyorkais des années 30. Un rooftop
+                situé au 1er étage, ni roof ni top, bien au contraire !
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                Le <strong>98 BIS</strong>, comme le surnomme les habitués, se trouve étonamment au{" "}
+                <strong>98B boulevard de Champigny, à Saint-Maur des Fossées</strong>. Son propriétaire ouvre les portes
+                de l'établissement afin d'accueillir la crème de la crème de la haute société !
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                Soirée sur invitation seulement, <strong>RER A</strong> (arrêt Champigny) avec wagons publics privatisés
+                pour l'occasion, aucun parking privé, vestiaire payant.
               </p>
             </div>
-            <div className="animate-fade-bottom delay-600 max-w-xs">
+            <div className="animate-fade-bottom delay-600 max-w-xs flex flex-col gap-2">
               <h2 className="text-2xl font-bold mb-2">L&apos;ambiance</h2>
               <p className="opacity-70 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.
+                Une <strong>après-midi détente</strong> au sein de l'un des nombreux salons privées de l'établissement
+                (au nombre de 1).
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                Musique, jeux de société, débats politiques, combats de coqs, opération à cœur ouvert, atelier de
+                poterie sans glaise, fumoir d'opium... Les activités les plus extravagantes ont été organisées dans le
+                seul but de combler votre insatiable soif de divertissements !
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                <strong>Soirée dansante et chic</strong> avec DJ set et open-bar à cocktails. Laissez libre cours à
+                votre imagination afin de composer le cocktail qui réchaufera les coeurs et les esprits !
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                Enfin, <strong>brunch</strong> le lendemain matin pour les personnes logées dans le gîte ainsi que ceux
+                désirant profiter encore quelques heures de la magie de cette soirée d'exception !
               </p>
             </div>
             <div className="animate-fade-top delay-1000 max-w-xs">
-              <h2 className="text-2xl font-bold mb-2">Le dress code</h2>
+              <h2 className="text-2xl font-bold mb-2">Bar à Cocktails</h2>
               <p className="opacity-70 leading-relaxed">
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-                dolores eos qui ratione voluptatem sequi nesciunt.
+                Le thème de la soirée étant les cocktails, <strong>une tenue chic et élégante</strong> est fortement
+                conseillée (bien que non obligatoire, le combo short/veste de costume étant le summum du chic
+                décontracté).
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                Chaque invité peut contribuer à la soirée en amenant des <strong>victuailles</strong> mais surtout des{" "}
+                <strong>ingrédients</strong> pour le bar à cocktails ! La section suivante vous permettra de voir les
+                ingrédients déjà prévus et d&apos;indiquer votre contribution afin d&apos;éviter les doublons.
+                Privilégiez les ingrédients originaux.
+              </p>
+              <p className="opacity-70 leading-relaxed">
+                De plus, il est fortement encouragé de ramener des <strong>"fonds de tiroir"</strong> (bouteilles
+                entamées, invendues ou jugées trop exotiques) afin de réduire le gaspillage et pourquoi pas pimenter les
+                choses !
               </p>
             </div>
           </div>
