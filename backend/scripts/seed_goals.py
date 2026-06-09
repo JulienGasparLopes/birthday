@@ -20,21 +20,22 @@ class Goal(NamedTuple):
 
 
 GOALS: list[Goal] = [
-    Goal("vodka",      3.0,  "liquid"),
-    Goal("gin",        2.0,  "liquid"),
-    Goal("rhum",       2.0,  "liquid"),
-    Goal("tequila",    1.5,  "liquid"),
-    Goal("whisky",     2.0,  "liquid"),
-    Goal("champagne",  4.0,  "liquid"),
-    Goal("prosecco",   3.0,  "liquid"),
-    Goal("vin_rouge",  4.0,  "liquid"),
-    Goal("vin_blanc",  3.0,  "liquid"),
-    Goal("biere",      8.0,  "liquid"),
-    Goal("mojito_mix", 2.0,  "liquid"),
-    Goal("jus_orange", 3.0,  "liquid"),
-    Goal("tonic",      4.0,  "liquid"),
-    Goal("sirop",      1.0,  "liquid"),
-    Goal("eau_petil",  6.0,  "liquid"),
+    Goal("vodka", 1.0, "liquid"),
+    Goal("gin", 1.0, "liquid"),
+    Goal("rhum blanc", 1.0, "liquid"),
+    Goal("rhum ambré", 1.0, "liquid"),
+    Goal("triple sec", 1.0, "liquid"),
+    Goal("vermouth dry", 1.0, "liquid"),
+    Goal("champagne", 3.0, "liquid"),
+    Goal("bayley", 1.0, "liquid"),
+    Goal("liqueur de pêche", 1.0, "liquid"),
+    Goal("curaçao", 1.0, "liquid"),
+    Goal("jus de cranberry", 2.0, "liquid"),
+    Goal("ananas", 1.0, "liquid"),
+    Goal("limonade", 2.0, "liquid"),
+    Goal("eau pétillante", 3.0, "liquid"),
+    Goal("jus d'abricot", 1.0, "liquid"),
+    Goal("tonic", 1.0, "liquid"),
 ]
 
 
@@ -56,12 +57,18 @@ def seed_goals() -> None:
         )
         if result.upserted_id:
             inserted += 1
-            print(f"  [+] Inserted  {goal.participation_type}: {goal.amount} {goal.unit}")
+            print(
+                f"  [+] Inserted  {goal.participation_type}: {goal.amount} {goal.unit}"
+            )
         elif result.modified_count:
             updated += 1
-            print(f"  [~] Updated   {goal.participation_type}: {goal.amount} {goal.unit}")
+            print(
+                f"  [~] Updated   {goal.participation_type}: {goal.amount} {goal.unit}"
+            )
         else:
-            print(f"  [=] Unchanged {goal.participation_type}: {goal.amount} {goal.unit}")
+            print(
+                f"  [=] Unchanged {goal.participation_type}: {goal.amount} {goal.unit}"
+            )
 
     print(f"\nDone — {inserted} inserted, {updated} updated.")
     connector.client.close()
