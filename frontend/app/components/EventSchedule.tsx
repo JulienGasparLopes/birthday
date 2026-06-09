@@ -99,8 +99,8 @@ export function EventSchedule() {
   }
 
   return (
-    <section className="scroll-section flex flex-col bg-[#d0c9c3] text-[#1d1b19] px-8 py-32 overflow-y-auto">
-      <div className="flex flex-col sm:flex-row gap-6 flex-1 max-w-5xl w-full mx-auto">
+    <section className="scroll-section scroll-section-auto flex flex-col bg-[#d0c9c3] text-[#1d1b19] px-8 py-12 overflow-y-auto">
+      <div className="flex flex-col sm:flex-row gap-8 sm:gap-6 max-w-5xl w-full mx-auto">
         {PARTS.map((part) => {
           const partCounts = counts[part.id] ?? { yes: 0, maybe: 0, no: 0 };
           const myChoice = userVotes[part.id];

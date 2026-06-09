@@ -35,16 +35,16 @@ export default function Home() {
   return (
     <>
       <div className="scroll-container">
-        <RevealSection className="scroll-section flex flex-col justify-center items-center bg-[#1c1b19] text-[#cfc8c3] px-8">
-          <h1 className="animate-fade-bottom delay-300 text-8xl font-bold text-center mb-12">30s Birthday Cocktail</h1>
-          <p className="animate-fade-bottom delay-1200 text-xl text-center max-w-2xl opacity-80">
+        <RevealSection className="scroll-section flex flex-col justify-center items-center bg-[#1c1b19] text-[#cfc8c3] px-6 sm:px-8">
+          <h1 className="animate-fade-bottom delay-300 text-4xl sm:text-8xl font-bold text-center mb-6 sm:mb-12">30s Birthday Cocktail</h1>
+          <p className="animate-fade-bottom delay-1200 text-base sm:text-xl text-center max-w-2xl opacity-80">
             La soirée la plus convoitée de l&apos;année par la Jetset, dans un near-rooftop en plein milieu des beaux
             quartiers de Saint-Maur
           </p>
         </RevealSection>
-        <RevealSection className="scroll-section flex flex-col justify-center items-start bg-[#d0c9c3] text-[#1d1b19] px-32">
-          <div className="flex flex-row gap-12 w-full justify-between">
-            <div className="animate-fade-top delay-300 max-w-xs flex flex-col gap-2">
+        <RevealSection className="scroll-section scroll-section-auto flex flex-col justify-center items-start bg-[#d0c9c3] text-[#1d1b19] px-8 sm:px-32 overflow-y-auto">
+          <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 w-full justify-between py-12 sm:py-0">
+            <div className="animate-fade-top delay-300 sm:max-w-xs flex flex-col gap-2">
               <h2 className="text-2xl font-bold mb-2">Le cadre</h2>
               <p className="opacity-70 leading-relaxed">
                 Décoration minimaliste, épurée et recherchée dans un esprit loft-newyorkais des années 30. Un rooftop
@@ -60,7 +60,7 @@ export default function Home() {
                 pour l'occasion, aucun parking privé, vestiaire payant.
               </p>
             </div>
-            <div className="animate-fade-bottom delay-600 max-w-xs flex flex-col gap-2">
+            <div className="animate-fade-bottom delay-600 sm:max-w-xs flex flex-col gap-2">
               <h2 className="text-2xl font-bold mb-2">L&apos;ambiance</h2>
               <p className="opacity-70 leading-relaxed">
                 Une <strong>après-midi détente</strong> au sein de l'un des nombreux salons privées de l'établissement
@@ -80,7 +80,7 @@ export default function Home() {
                 désirant profiter encore quelques heures de la magie de cette soirée d'exception !
               </p>
             </div>
-            <div className="animate-fade-top delay-1000 max-w-xs">
+            <div className="animate-fade-top delay-1000 sm:max-w-xs">
               <h2 className="text-2xl font-bold mb-2">Bar à Cocktails</h2>
               <p className="opacity-70 leading-relaxed">
                 Le thème de la soirée étant les cocktails, <strong>une tenue chic et élégante</strong> est fortement
@@ -102,7 +102,7 @@ export default function Home() {
           </div>
         </RevealSection>
         <section className="scroll-section relative flex flex-col items-center bg-[#1c1b19] text-[#cfc8c3] px-8 overflow-y-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 pt-12 px-12 pb-20 w-full max-w-5xl">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-12 pt-12 px-4 sm:px-12 pb-20 w-full max-w-5xl">
             {Object.entries(stocks).map(([drinkId, stock]) => (
               <DrinkCard
                 key={drinkId}

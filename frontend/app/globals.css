@@ -27,6 +27,14 @@ body {
   scroll-snap-stop: always;
 }
 
+/* On mobile, allow tall sections to grow beyond the viewport */
+@media (max-width: 639px) {
+  .scroll-section-auto {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
 @keyframes fade-from-bottom {
   from {
     opacity: 0;
