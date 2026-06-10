@@ -16,15 +16,12 @@ body {
 
 .scroll-container {
   height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  overflow: hidden;
+  position: relative;
 }
 
 .scroll-section {
   height: 100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 /* On mobile, allow tall sections to grow beyond the viewport */

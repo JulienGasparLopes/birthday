@@ -6,6 +6,7 @@ import { DrinkCard } from "./components/DrinkCard";
 import { DrinkModal } from "./components/DrinkModal";
 import { EventSchedule } from "./components/EventSchedule";
 import { RevealSection } from "./components/RevealSection";
+import { ScrollContainer } from "./components/ScrollContainer";
 import { fetchStocks, fetchUserParticipations, Stock } from "./lib/api";
 
 const LS_KEY = "connected_user_id";
@@ -34,7 +35,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="scroll-container">
+      <ScrollContainer>
         <RevealSection className="scroll-section flex flex-col justify-center items-center bg-[#1c1b19] text-[#cfc8c3] px-6 sm:px-8">
           <h1 className="animate-fade-bottom delay-300 text-4xl sm:text-8xl font-bold text-center mb-6 sm:mb-12">30s Birthday Cocktail</h1>
           <p className="animate-fade-bottom delay-1200 text-base sm:text-xl text-center max-w-2xl opacity-80">
@@ -131,7 +132,7 @@ export default function Home() {
           </div>
         </section>
         <EventSchedule />
-      </div>
+      </ScrollContainer>
 
       {modal && <DrinkModal drinkName={modal} onClose={() => setModal(null)} onContributed={loadData} />}
       {addDrinkOpen && (
