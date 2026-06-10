@@ -89,7 +89,12 @@ export function UserSwitcher() {
           <div className="bg-[#2e2c2a] text-[#cfc8c3] rounded-2xl shadow-2xl w-full max-w-xs mx-4 overflow-hidden flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#1c1b19]/40">
-              <p className="text-xs uppercase tracking-widest opacity-50">Connexion</p>
+              <div>
+                <p className="text-xs uppercase tracking-widest opacity-50">Connexion</p>
+                {active && (
+                  <p className="text-xs mt-0.5 opacity-70">Connecté en tant que <span className="font-semibold text-[#cfc8c3] opacity-100">{active.name}</span></p>
+                )}
+              </div>
               <button
                 onClick={() => setOpen(false)}
                 className="opacity-40 hover:opacity-100 transition-opacity"

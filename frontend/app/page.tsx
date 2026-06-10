@@ -101,8 +101,8 @@ export default function Home() {
             </div>
           </div>
         </RevealSection>
-        <section className="scroll-section relative flex flex-col items-center bg-[#1c1b19] text-[#cfc8c3] px-8 overflow-y-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-12 pt-12 px-4 sm:px-12 pb-20 w-full max-w-5xl">
+        <section className="scroll-section scroll-section-auto flex flex-col items-center bg-[#1c1b19] text-[#cfc8c3] px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-12 pt-12 px-4 sm:px-12 w-full max-w-5xl">
             {Object.entries(stocks).map(([drinkId, stock]) => (
               <DrinkCard
                 key={drinkId}
@@ -116,22 +116,13 @@ export default function Home() {
               />
             ))}
           </div>
-          {/* Add drink button — pinned to bottom */}
-          <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+          {/* Add drink button — in flow, always reachable */}
+          <div className="flex justify-center py-8">
             <button
               onClick={() => setAddDrinkOpen(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#cfc8c3]/20 text-[#cfc8c3] opacity-50 hover:opacity-100 hover:border-[#cfc8c3]/60 transition-all text-sm"
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19" />
                 <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
