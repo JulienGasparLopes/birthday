@@ -12,7 +12,10 @@ USERS = [
     "Alexia B",
     "Alexia L",
     "Anaïs",
-    "Antoine",
+    "Antoine T",
+    "Lucie",
+    "Marine T",
+    "Alexandre",
     "Diane",
     "Farouk",
     "Jeanne",
@@ -35,6 +38,8 @@ USERS = [
     "Loïc",
     "Le Z",
     "Alexis",
+    "Baptiste",
+    "Samuel",
 ]
 
 

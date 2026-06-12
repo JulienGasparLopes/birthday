@@ -36,6 +36,7 @@ GOALS: list[Goal] = [
     Goal("eau pétillante", 3.0, "liquid"),
     Goal("jus d'abricot", 1.0, "liquid"),
     Goal("tonic", 1.0, "liquid"),
+    Goal("basilic réglementaire", 5.0, "unité"),
 ]
 
 
